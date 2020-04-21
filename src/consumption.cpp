@@ -739,6 +739,13 @@ ret_val<edible_rating> Character::will_eat( const item &food, bool interactive )
     const bool saprophage = has_trait( trait_SAPROPHAGE );
     const auto &comest = food.get_comestible();
 
+    if( comest->parasites > 0 && !food.has_flag( flag_NO_PARASITES ) ) {
+        const bool paraimmune = has_trait( trait_PARAIMMUNE );
+        if( !paraimmune && !has_bionic( bio_digestion ) ) {
+            add_consequence( _( "This food could contain parasites." ), PARASITES );
+        }
+    }
+
     if( food.rotten() ) {
         const bool saprovore = has_trait( trait_SAPROVORE );
         if( !saprophage && !saprovore ) {

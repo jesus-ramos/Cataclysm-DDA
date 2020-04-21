@@ -156,6 +156,8 @@ enum edible_rating {
     NAUSEA,
     // We can eat this, but we'll overeat
     TOO_FULL,
+    // We can eat this but we might get parasites
+    PARASITES,
     // Some weird stuff that requires a tool we don't have
     NO_TOOL
 };

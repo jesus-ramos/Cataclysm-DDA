@@ -3901,6 +3901,7 @@ nc_color item::color_in_inventory() const
                 ret = c_brown;
                 break;
             case NAUSEA:
+            case PARASITES:
                 ret = c_pink;
                 break;
             case NO_TOOL:
