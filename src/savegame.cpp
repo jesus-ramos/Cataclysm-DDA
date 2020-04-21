@@ -84,6 +84,7 @@ void game::serialize( std::ostream &fout )
     json.member( "auto_travel_mode", auto_travel_mode );
     json.member( "run_mode", static_cast<int>( safe_mode ) );
     json.member( "mostseen", mostseen );
+    json.member( "tileset_zoom", tileset_zoom );
     // current map coordinates
     tripoint pos_sm = m.get_abs_sub();
     const point pos_om = sm_to_om_remain( pos_sm.x, pos_sm.y );
@@ -190,6 +191,7 @@ void game::unserialize( std::istream &fin )
         data.read( "levz", levz );
         data.read( "om_x", comx );
         data.read( "om_y", comy );
+        data.read( "tileset_zoom", tileset_zoom );
 
         calendar::turn = tmpturn;
         calendar::start_of_cataclysm = tmpcalstart;
