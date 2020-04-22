@@ -1151,6 +1151,13 @@ void options_manager::add_options_general()
          false
        );
 
+    add( "AUTO_FEATURES_SAFEMODE_STYLE", "general", translate_marker( "Auto features safemode style" ),
+         translate_marker( "When to disable auto features. Seen: When enemies are seen (default). Hostile: Whenever hostile enemies are nearby" ),
+    { { "seen", translate_marker( "Seen" ) }, { "hostile", translate_marker( "Hostile" ) } },
+    "seen" );
+
+    get_option( "AUTO_FEATURES_SAFEMODE_STYLE" ).setPrerequisite( "AUTO_FEATURES" );
+
     add( "AUTO_PULP_BUTCHER", "general", translate_marker( "Auto pulp or butcher" ),
          translate_marker( "Action to perform when 'Auto pulp or butcher' is enabled.  Pulp: Pulp corpses you stand on.  - Pulp Adjacent: Also pulp corpses adjacent from you.  - Butcher: Butcher corpses you stand on." ),
     { { "off", to_translation( "options", "Disabled" ) }, { "pulp", translate_marker( "Pulp" ) }, { "pulp_adjacent", translate_marker( "Pulp Adjacent" ) }, { "butcher", translate_marker( "Butcher" ) } },

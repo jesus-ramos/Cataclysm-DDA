@@ -9276,8 +9276,15 @@ point game::place_player( const tripoint &dest_loc )
     // If you must use it you can calculate the position in the new, shifted system with
     // adjusted_pos = ( old_pos.x - submap_shift.x * SEEX, old_pos.y - submap_shift.y * SEEY, old_pos.z )
 
+    bool auto_actions_allowed;
+    if( get_option<std::string> ( "AUTO_FEATURES_SAFEMODE_STYLE" ) == "seen" ) {
+        auto_actions_allowed = ( mostseen == 0 );
+    } else {
+        auto_actions_allowed = !is_hostile_nearby();
+    }
+
     //Auto pulp or butcher and Auto foraging
-    if( get_option<bool>( "AUTO_FEATURES" ) && mostseen == 0  && !u.is_mounted() ) {
+    if( get_option<bool>( "AUTO_FEATURES" ) && auto_actions_allowed && !u.is_mounted() ) {
         static const direction adjacentDir[8] = { direction::NORTH, direction::NORTHEAST, direction::EAST, direction::SOUTHEAST, direction::SOUTH, direction::SOUTHWEST, direction::WEST, direction::NORTHWEST };
 
         const std::string forage_type = get_option<std::string>( "AUTO_FORAGING" );
@@ -9350,7 +9357,7 @@ point game::place_player( const tripoint &dest_loc )
 
     //Autopickup
     if( !u.is_mounted() && get_option<bool>( "AUTO_PICKUP" ) && !u.is_hauling() &&
-        ( !get_option<bool>( "AUTO_PICKUP_SAFEMODE" ) || mostseen == 0 ) &&
+        ( !get_option<bool>( "AUTO_PICKUP_SAFEMODE" ) || auto_actions_allowed ) &&
         ( m.has_items( u.pos() ) || get_option<bool>( "AUTO_PICKUP_ADJACENT" ) ) ) {
         Pickup::pick_up( u.pos(), -1 );
     }
